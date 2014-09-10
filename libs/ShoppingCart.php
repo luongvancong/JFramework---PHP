@@ -9,12 +9,6 @@
  */
 abstract class ShoppingCart {
 
-	/**
-	 * Location
-	 *
-	 * @var integer
-	 */
-	protected $_location = 0;
 
 	/**
 	 * Items
@@ -31,15 +25,15 @@ abstract class ShoppingCart {
 	 */
 	protected $_itemsLocation = array();
 
+	abstract public function getTotalMoney();
+
 	public function __construct($location) {
 		if(!isset($_SESSION['cart']) || !is_array($_SESSION['cart'])) $_SESSION['cart'] = array();
 		if(!isset($_SESSION['cart'][$location]) || !is_array($_SESSION['cart'][$location])) $_SESSION['cart'][$location] = array();
 
-		$this->_location = $location;
 		$this->_itemsLocation = & $_SESSION['cart'][$location];
 		$this->_items = & $_SESSION['cart'];
 	}
-
 
 	/**
 	 * Add an item to cart
@@ -48,8 +42,8 @@ abstract class ShoppingCart {
 	 * @param integer $quantity
 	 * @param array  $options
 	 */
-	public function add($id, $quantity, $options = array()) {
-		$this->_itemsLocation[$id] = array('quantity' => $quantity, 'options' => $options);
+	public function add($productId, $childId = 0, $quantity, $options = array()) {
+		$this->_itemsLocation[$this->getKeyArray($productId, $childId)] = array('quantity' => $quantity, 'options' => $options);
 	}
 
 
@@ -58,8 +52,13 @@ abstract class ShoppingCart {
 	 *
 	 * @param  integer $id
 	 */
-	public function remove($id) {
-		unset($this->_itemsLocation[$id]);
+	public function remove($productId, $childId = 0) {
+		if(isset($this->_itemsLocation[$this->getKeyArray($productId, $childId)])) {
+			unset($this->_itemsLocation[$this->getKeyArray($productId, $childId)]);
+			return true;
+		}
+
+		return false;
 	}
 
 
@@ -70,8 +69,11 @@ abstract class ShoppingCart {
 	 * @param  integer $location
 	 * @return mixed
 	 */
-	public function getItem($id, $location = null) {
-		if( ($location !== null) && isset($this->_items[$location]) && isset($this->_items[$location][$id])) {
+	public function getItem($productId, $childId = 0, $location = null) {
+
+		$id = $this->getKeyArray($productId, $childId);
+
+		if( ($location !== null) && isset($this->_items[$location]) && isset($this->_items[$location][$id]) ) {
 			return $this->_items[$location][$id];
 		}
 
@@ -96,12 +98,6 @@ abstract class ShoppingCart {
 		return array();
 	}
 
-
-	/**
-	 * Count Items
-	 *
-	 * @return integer
-	 */
 	public function count() {
 		return count($this->_itemsLocation);
 	}
@@ -121,4 +117,42 @@ abstract class ShoppingCart {
 			$this->_items = array();
 		}
 	}
+
+
+	/**
+	 * Make key for item with productId and childId
+	 *
+	 * @param  mixed $productId
+	 * @param  mixed $childId
+	 * @return string
+	 */
+	public function getKeyArray($productId, $childId) {
+		return $productId . '-' . $childId;
+	}
+
+
+	/**
+	 * Get productId from key
+	 *
+	 * @param  mixed $key
+	 * @return mixed
+	 */
+	public function getProductId($key) {
+		$exp = explode('-', $key);
+		return isset($exp[0]) ? $exp[0] : 0;
+	}
+
+
+
+	/**
+	 * Get childId from key
+	 *
+	 * @param  mixed $key
+	 * @return mixed
+	 */
+	public function getChildId($key) {
+		$exp = explode('-', $key);
+		return isset($exp[1]) ? $exp[1] : 0;
+	}
+
 }

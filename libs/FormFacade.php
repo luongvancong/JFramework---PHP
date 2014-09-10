@@ -1,7 +1,7 @@
 <?php
 
 
-class FormCreator {
+class FM {
 
 	public static $_instance;
 
