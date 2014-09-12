@@ -5,6 +5,9 @@ class IndexController extends Controller {
 	public function __construct() {
 		parent::__construct();
 		$this->user = new User;
+
+		var_dump(Input::get('name'));
+
 	}
 
 	public function getIndex() {
