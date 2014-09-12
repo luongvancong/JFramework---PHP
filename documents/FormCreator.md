@@ -1,39 +1,39 @@
-##FormCreator##
+##Form maker##
 
 **Open form**
 
-	FormCreator::openForm();
-	FormCreator::openForm($attributes);
+	FM::openForm();
+	FM::openForm($attributes);
 
 **Close Form**
 
-	FormCreator::closeForm();
+	FM::closeForm();
 
 **Input**
 
-	FormCreator::text($attributes);
-	FormCreator::hidden($attributes);
-	FormCreator::email($attributes);
-	FormCreator::password($attributes);
+	FM::text($attributes);
+	FM::hidden($attributes);
+	FM::email($attributes);
+	FM::password($attributes);
 
 >$attributes : Mảng thuộc tính
 
-	echo FormCreator::text(array('name' => 'username', 'id' => 'username'));
-	echo FormCreator::hidden(array('name' => 'username', 'id' => 'username'));
-	echo FormCreator::email(array('name' => 'username', 'id' => 'username'));
-	echo FormCreator::password(array('name' => 'username', 'id' => 'username'));
+	echo FM::text(array('name' => 'username', 'id' => 'username'));
+	echo FM::hidden(array('name' => 'username', 'id' => 'username'));
+	echo FM::email(array('name' => 'username', 'id' => 'username'));
+	echo FM::password(array('name' => 'username', 'id' => 'username'));
 
 **Radio**
 
-	echo FormCreator::radio(array('name' => 'username', 'id' => 'username'));
+	echo FM::radio(array('name' => 'username', 'id' => 'username'));
 
 **Checkbox**
 
-	echo FormCreator::checkbox(array('name' => 'username', 'id' => 'username'));
+	echo FM::checkbox(array('name' => 'username', 'id' => 'username'));
 
 **Select**
 
-	echo FormCreator::select($data, $defaultValue, $attributes = array());
+	echo FM::select($data, $defaultValue, $attributes = array());
 
 >$data : Dữ liệu đổ vào thẻ select `array($key => $value)`
 >$defaultValue : Giá trị mặc định của select, là key của mảng data
@@ -43,23 +43,23 @@ Ví dụ:
 
 	$data = array(1 => 'Cam', 3 => 'Quýt', 4 => 'Na');
 	$defaultValue = 1;
-	FormCreator::select($data, $defaultValue);
+	FM::select($data, $defaultValue);
 
 	// Hoặc
 	$data = array(array(1 => 'Cam'), array( 3 => 'Quýt'), array(4 => 'Na'));
 	$defaultValue = 1;
-	FormCreator::select($data, $defaultValue);
+	FM::select($data, $defaultValue);
 
 **Textarea**
 
-	echo FormCreator::textarea($content, $attributes = array());
+	echo FM::textarea($content, $attributes = array());
 
 >content : Nội dung của textarea
 >$attributes : Mảng thuộc tính
 
 **Button**
 
-	echo FormCreator::button($type, $text, $attributes = array());
+	echo FM::button($type, $text, $attributes = array());
 
 >$type : 'submit', 'reset';
 >$text : Text button
@@ -67,20 +67,20 @@ Ví dụ:
 
 >Ví dụ:
 
-	echo FormCreator::button('submit', 'Cập nhật');
-	echo FormCreator::button('reset', 'Reset');
+	echo FM::button('submit', 'Cập nhật');
+	echo FM::button('reset', 'Reset');
 
 **Tạo control form-horizontal bootstrap**
 
-	FormCreator::makeControl($title, $control);
+	FM::makeControl($title, $control);
 
 >$title: Tiêu đề control
 >$control: HTML control
 
 Ví dụ:
 
-	FormCreator::openForm();
-	FormCreator::makeControl('UserName', FormCreator::text(array('name' => 'username')));
-	FormCreator::makeControl('Password', FormCreator::password(array('name' => 'password')));
-	FormCreator::makeButton();
-	FormCreator::closeForm();
+	FM::openForm();
+	FM::makeControl('UserName', FM::text(array('name' => 'username')));
+	FM::makeControl('Password', FM::password(array('name' => 'password')));
+	FM::makeButton();
+	FM::closeForm();

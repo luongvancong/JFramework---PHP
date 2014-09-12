@@ -62,3 +62,76 @@ function reflectObject($class, array $data) {
 	return null;
 }
 
+
+
+/**
+ * Tạo url filter nhiều tiêu chí
+ *
+ * @param  string $key   Tên param
+ * @param  string $value Giá trị param
+ * @return array
+ */
+function makeUrlFilterMulti($key, $value) {
+
+	if(isset($_GET['page'])) unset($_GET['page']);
+
+	if(isset($_GET[$key]) && $_GET[$key] != '') {
+		$key_get = $_GET[$key];
+
+		$key_get_value = explode(':', $key_get);
+
+		// Nếu nằm trong giá trị của $_GET thì unset ngay
+		if(in_array($value, $key_get_value)) {
+			$k = array_search($value, $key_get_value);
+			if($k !== false) {
+				unset($key_get_value[$k]);
+				$url = url_add_params(array($key => implode(':', $key_get_value)));
+				return array('url' => $url, 'active' => 1);
+			}
+		}
+		// Chưa có trong $_GET thì thêm vào
+		else{
+			array_push($key_get_value, $value);
+			$url = url_add_params(array($key => implode(':', $key_get_value)));
+			return array('url' => $url, 'active' => 0);
+		}
+	}
+
+	return array('url' => url_add_params(array($key => $value)), 'active' => 0);
+}
+
+
+function curlGetContent($url) {
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_URL, $url);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+	curl_setopt($ch, CURLOPT_SSLVERSION,3);
+	curl_setopt($ch, CURLOPT_CONNECTTIMEOUT ,60);
+	curl_setopt($ch, CURLOPT_TIMEOUT, 60);
+	$data = curl_exec ($ch);
+	$error = curl_error($ch);
+	curl_close ($ch);
+	return $data;
+}
+
+function microtime_float(){
+   list($usec, $sec) = explode(" ", microtime());
+   return ((float)$usec + (float)$sec);
+}
+
+function getQuery($query, $params) {
+	$keys = array();
+
+	# build a regular expression for each parameter
+	foreach ($params as $key => $value) {
+	  if (is_string($key)) {
+	      $keys[] = '/:'.$key.'/';
+	  } else {
+	      $keys[] = '/[?]/';
+	  }
+	}
+
+	$query = preg_replace($keys, $params, $query, 1, $count);
+
+	return $query;
+}

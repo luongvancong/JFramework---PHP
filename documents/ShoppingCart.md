@@ -1,42 +1,77 @@
-## Shopping Cart
+## Abstract Class Shopping Cart
 
-**1.Khởi tạo đối tượng ShoppingCart**
+**.Tạo class kế thừa ShoppingCart**
 
-	$cart = new ShoppingCart($location);
+	class Cart extends ShoppingCart {
+		public function getTotalMoney() {
+			// Code here
+		}
+	}
+
+**.Khởi tạo đối tượng ShoppingCart**
+
+	$cart = new Cart($location);
 
 >$location : ID khu vực
 
-**2. Thêm 1 item**
+**. Thêm 1 item**
 
-	$cart->add($productId, $quantity, $options = array());
+	$cart->add($productId, $childId = 0, $quantity, $options = array());
 
 >$productId : ID sản phẩm
+>$childId : ID sản phẩm con( Nếu có ), mặc định là 0
 >$quantity : Số lượng thêm vào giỏ hàng
 >$options : Mảng các options truyền thêm
 
-**3. Lấy thông tin 1 item trong giỏ hàng**
+**. Lấy thông tin 1 item trong giỏ hàng**
 
-	$cart->getItem($id, $location = null);
+	$cart->getItem($productId, $childId = 0, $location = null);
 
->$id : ID sản phẩm
+>$productId : ID sản phẩm
+>$childId : ID sản phẩm con( Nếu có ), mặc định là 0
 >$location : ID khu vực, không truyền mặc định lấy location hiện tại
 
-**4. Lấy thông tin giỏ hàng theo khu vực**
+**. Lấy thông tin giỏ hàng theo khu vực**
 
 	$cart->getContents($location);
 
-**5. Lấy tất cả thông tin giỏ hàng ( Không quan tâm tới khu vực )**
+**. Lấy tất cả thông tin giỏ hàng ( Không quan tâm tới khu vực )**
 
 	$cart->getContents('all');
 
-**6. Xóa 1 item khỏi giỏ hàng của khu vực X**
+**. Xóa 1 item khỏi giỏ hàng của khu vực X**
 
-	$cart->remove($productId);
+	$cart->remove($productId, $childId = 0);
 
-**7. Xóa hết item của giỏ hàng thuộc khu vực X**
+>$productId : ID sản phẩm
+>$childId : ID sản phẩm con( Nếu có ), mặc định là 0
+
+**. Xóa hết item của giỏ hàng thuộc khu vực X**
 
 	$cart->clear($location);
 
-**8. Xóa tất cả giỏ hàng**
+**. Xóa tất cả giỏ hàng**
 
 	$cart->clear('all');
+
+**. Lấy cặp key productId và childId**
+
+Key item trong giỏ hàng được tạo dựa trên productId và childId là duy nhất.
+
+	$cart->getKeyArray($productId, $childId);
+
+>$productId : ID sản phẩm
+>$childId : ID sản phẩm con
+
+**. Lấy productId trong key**
+
+	$cart->getProductId($key);
+
+>$key: Key được tạo ra từ productId và childID
+
+**. Lấy childId trong key**
+
+	$cart->getChildId($key);
+
+>$key: Key được tạo ra từ productId và childID
+
