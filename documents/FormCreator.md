@@ -2,19 +2,19 @@
 
 **Open form**
 
-	FM::openForm();
-	FM::openForm($attributes);
+	echo FM::openForm();
+	echo FM::openForm($attributes);
 
 **Close Form**
 
-	FM::closeForm();
+	echo FM::closeForm();
 
 **Input**
 
-	FM::text($attributes);
-	FM::hidden($attributes);
-	FM::email($attributes);
-	FM::password($attributes);
+	echo FM::text($attributes);
+	echo FM::hidden($attributes);
+	echo FM::email($attributes);
+	echo FM::password($attributes);
 
 >$attributes : Mảng thuộc tính
 
@@ -43,12 +43,12 @@ Ví dụ:
 
 	$data = array(1 => 'Cam', 3 => 'Quýt', 4 => 'Na');
 	$defaultValue = 1;
-	FM::select($data, $defaultValue);
+	echo FM::select($data, $defaultValue);
 
 	// Hoặc
 	$data = array(array(1 => 'Cam'), array( 3 => 'Quýt'), array(4 => 'Na'));
 	$defaultValue = 1;
-	FM::select($data, $defaultValue);
+	echo FM::select($data, $defaultValue);
 
 **Textarea**
 
@@ -79,8 +79,8 @@ Ví dụ:
 
 Ví dụ:
 
-	FM::openForm();
-	FM::makeControl('UserName', FM::text(array('name' => 'username')));
-	FM::makeControl('Password', FM::password(array('name' => 'password')));
-	FM::makeButton();
-	FM::closeForm();
+	echo FM::openForm();
+	echo FM::makeControl('UserName', FM::text(array('name' => 'username')));
+	echo FM::makeControl('Password', FM::password(array('name' => 'password')));
+	echo FM::makeButton();
+	echo FM::closeForm();
