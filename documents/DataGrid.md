@@ -38,8 +38,11 @@
 	));
 
 >$data: Mảng dữ liệu kết quả sau khi truy vấn từ mySql
+
 >$page : Trang hiện tại
+
 >$total : Tổng số bản ghi
+
 >$limit: Số bản ghi muốn hiển thị trên 1 trang
 
 **Thêm cột dữ liệu**
@@ -47,10 +50,15 @@
 	$grid->addColumn($fieldName, $titleColumn, $sort, $attributes, $callback);
 
 >$fieldName : Tên trưòng trong bảng dữ liệu
+
 >$titleColumn : Tiêu đề cột
+
 >$sort : Có sắp xếp hay không , 1 là sắp xếp, 0 là không sắp xếp
+
 >$attributes : Mảng thuộc tính HTML của cột | array('id' => '', 'class' => '')
+
 >$callback: Callback trả về dạng `function($item)`
+
 >$item : Mảng dữ liệu tưong ứng với 1 row trong bảng dữ liệu, `print_r($item)` để biết thêm chi tiết
 
 Ví dụ:
@@ -64,8 +72,11 @@ Ví dụ:
 	$grid->addSearch($row, $column, $title, $control);
 
 >$row: Hàng nào, ví dụ: 1
+
 >$column: Cột nào, ví dụ : 2
+
 >$title: Tiêu đề control
+
 >$control: HTML control
 
 Ví dụ:

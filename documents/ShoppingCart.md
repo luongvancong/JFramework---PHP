@@ -19,8 +19,11 @@
 	$cart->add($productId, $childId = 0, $quantity, $options = array());
 
 >$productId : ID sản phẩm
+
 >$childId : ID sản phẩm con( Nếu có ), mặc định là 0
+
 >$quantity : Số lượng thêm vào giỏ hàng
+
 >$options : Mảng các options truyền thêm
 
 **. Lấy thông tin 1 item trong giỏ hàng**
@@ -28,7 +31,9 @@
 	$cart->getItem($productId, $childId = 0, $location = null);
 
 >$productId : ID sản phẩm
+
 >$childId : ID sản phẩm con( Nếu có ), mặc định là 0
+
 >$location : ID khu vực, không truyền mặc định lấy location hiện tại
 
 **. Lấy thông tin giỏ hàng theo khu vực**
@@ -44,6 +49,7 @@
 	$cart->remove($productId, $childId = 0);
 
 >$productId : ID sản phẩm
+
 >$childId : ID sản phẩm con( Nếu có ), mặc định là 0
 
 **. Xóa hết item của giỏ hàng thuộc khu vực X**
@@ -61,6 +67,7 @@ Key item trong giỏ hàng được tạo dựa trên productId và childId là 
 	$cart->getKeyArray($productId, $childId);
 
 >$productId : ID sản phẩm
+
 >$childId : ID sản phẩm con
 
 **. Lấy productId trong key**

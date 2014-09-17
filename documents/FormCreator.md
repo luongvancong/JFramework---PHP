@@ -57,6 +57,7 @@ Ví dụ:
 	echo FM::textarea($content, $attributes = array());
 
 >content : Nội dung của textarea
+
 >$attributes : Mảng thuộc tính
 
 **Button**
@@ -64,7 +65,9 @@ Ví dụ:
 	echo FM::button($type, $text, $attributes = array());
 
 >$type : 'submit', 'reset';
+
 >$text : Text button
+
 >$attributes : Mảng thuộc tính
 
 >Ví dụ:
@@ -77,6 +80,7 @@ Ví dụ:
 	FM::makeControl($title, $control);
 
 >$title: Tiêu đề control
+
 >$control: HTML control
 
 Ví dụ:
