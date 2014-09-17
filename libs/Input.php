@@ -18,13 +18,13 @@ class Input {
 	 * Clean XSS
 	 * @var boolean
 	 */
-	protected $clean_xss = true;
+	protected $clean_xss = false;
 
 	/**
 	 * Escape string prevent SQL Injection
 	 * @var boolean
 	 */
-	protected $escape_string = true;
+	protected $escape_string = false;
 
 	/**
 	 * The hien cua lop Input
@@ -82,7 +82,6 @@ class Input {
 	 * @return any
 	 */
 	private function fetch_data(&$array, $key = '', $default = null) {
-
 		// Nhan gia tri mac dinh neu khong ton tai key trong array
 		if (! isset($array[$key])) {
 			return $default;
@@ -91,10 +90,13 @@ class Input {
 		$data = $array[$key];
 
 		// Clean XSS
-		$data = $this->_cleanXSS($array[$key]);
+		if ($this->clean_xss === true) {
+			$data = $this->_cleanXSS($array[$key]);
+		}
 
 		// Prevent sql injection
-		$data = addslashes(strip_tags($data));
+		if (is_string($data) && $this->escape_string)
+			$data = mysql_real_escape_string($data);
 
 		return $data;
 	}
