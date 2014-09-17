@@ -327,7 +327,7 @@ class FormMaker {
 
 		if($this->isLaravel && Session::has('errors')) {
 			$errors = Session::get('errors');
-			if($errors->has($this->name)) {
+			if(is_object($errors) && $errors->has($this->name) && ( strpos($control, 'button') === false || strpos($control, 'submit') === false) ) {
 				$has_error = 'has-error';
 				$message = $errors->first($this->name, '<span class="help-inline text-danger">:message</span>');
 				$html = str_replace(array(':title_control', ':control', ':error_message'), array($title, $control, $message), $template);
