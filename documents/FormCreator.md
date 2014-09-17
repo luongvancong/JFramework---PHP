@@ -36,7 +36,9 @@
 	echo FM::select($data, $defaultValue, $attributes = array());
 
 >$data : Dữ liệu đổ vào thẻ select `array($key => $value)`
+
 >$defaultValue : Giá trị mặc định của select, là key của mảng data
+
 >$attributes : Mảng thuộc tính của select, mặc định không có thuộc tính nào
 
 Ví dụ:
