@@ -1,18 +1,16 @@
 <?php
 /**
- * Class Form
+ * Class FormMaker
  * Support Bootstrap 3.0 , Font Awesome
  * @Author : Cong Luong
  * @Version: 1.0
- * @Lat edit : 28/08/2014
+ * @Lat edit : 06/09/2014
  */
 class FormMaker {
 
 	private $name;
 
 	public $isLaravel = true;
-
-	private $errors;
 
 	private $default_attributes_control = array('class' => 'form-control');
 
@@ -26,7 +24,7 @@ class FormMaker {
 
 	private $default_attributes_table = array('class' => 'table');
 
-	protected $input_methods = array('text', 'hidden', 'radio', 'checkbox', 'email', 'file', 'submit', 'reset');
+	protected $input_methods = array('text', 'hidden', 'radio', 'checkbox', 'email', 'file', 'submit', 'reset', 'password');
 
 	protected $template = '<div class="form-group">
 									<label class="col-sm-2 control-label">:title_control</label>
@@ -34,7 +32,7 @@ class FormMaker {
 								</div>';
 
 	public function __construct($options = array()) {
-		$this->errors = isset($options['errors']) ? $options['errors'] :  null;
+
 	}
 
 	/**
@@ -151,11 +149,26 @@ class FormMaker {
 
 		$attr_default = array('class' => $class);
 
-		$attr	= $this->mergeAttributes($this->default_attributes_button, $attr_default, $attr);
+		$attr	= $this->mergeAttributes($this->default_attributes_button, $attr_default, $attr, array('type' => $type));
 
 		$html = '<button '. $this->makeAttributes($attr) .'>'. $text .'</button>';
 
 		return $html;
+	}
+
+	/**
+	 * Make Group Button
+	 *
+	 * @return html
+	 */
+	public function makeButton() {
+		$template = $this->getTemplateHtml();
+
+		$button = '<a class="btn btn-link" href="javascript:window.history.go(-1)">Hủy</a>
+		         <button type="reset" class="btn">Xóa dữ liệu</button>
+		         <button type="submit" class="btn btn-success">Cập nhật</button>';
+
+		return str_replace(array(':title_control', ':control', ':error_message'), array('', $button, ''), $template);
 	}
 
 
@@ -306,13 +319,17 @@ class FormMaker {
 	 * @param  string $errorMessage Error message
 	 * @return html
 	 */
-	public function makeControl($title, $control, $errorMessage = '') {
+	public function makeControl($title, $control, $required = false, $errorMessage = '') {
+
+		if( ($required === true || $required === 1) && $title != '') $title .= ' <b class="text-danger">*</b>';
+
 		$template = $this->getTemplateHtml();
 
-		if($this->isLaravel) {
-			if($this->errors->has($this->name)) {
+		if($this->isLaravel && Session::has('errors')) {
+			$errors = Session::get('errors');
+			if($errors->has($this->name)) {
 				$has_error = 'has-error';
-				$message = $this->errors->first($this->name, '<span class="help-inline text-danger">:message</span>');
+				$message = $errors->first($this->name, '<span class="help-inline text-danger">:message</span>');
 				$html = str_replace(array(':title_control', ':control', ':error_message'), array($title, $control, $message), $template);
 				return $html;
 			}
@@ -320,6 +337,16 @@ class FormMaker {
 
 		return str_replace(array(':title_control', ':control', ':error_message'), array($title, $control, $errorMessage), $template);
 
+	}
+
+
+	/**
+	 * Get method avaiable
+	 *
+	 * @return array
+	 */
+	public function getMethods() {
+		return $this->input_methods;
 	}
 
 	private function validateAttribute($attr) {
